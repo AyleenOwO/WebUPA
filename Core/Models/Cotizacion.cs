@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Core.Models
 {
+    enum EstadoC { BORRADOR, ENVIADO, ACEPTADO, RECHAZADO, CANCELADO, COBRADO};
+    
     public class Cotizacion : BaseEntity
     {
         /// <summary>
@@ -13,7 +15,7 @@ namespace Core.Models
         /// <summary>
         /// fecha en la que se realizo la cotizacion.
         /// </summary>
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
 
         /// <summary>
         /// Precio total de la cotizacion.
@@ -33,21 +35,16 @@ namespace Core.Models
             {
                 throw new ModelException("Codigo no puede ser null");
             }
-
-            if (String.IsNullOrEmpty(Fecha))
+            
+            Models.Validate.ValidarFecha(Fecha.Day, Fecha.Month, Fecha.Year);
+            
+            if (Precio == null)
             {
-                throw new ModelException("Nombre no puede ser null o de tamanio inferior a 2");
+                throw new ModelException("Precio no puede ser null");
             }
-
-            if (Int16.TryParse())
-            {
-                throw new ModelException("Apellido Paterno no puede ser null o tamanio inferior a 2");
-            }
-
-            ///if ()
-           /// {
-              ///  throw new ModelException("Email no puede ser null o vacio.");
-            ///}
+            
+            ///Validar servicios??
+            /// 
             throw new System.NotImplementedException();
             
         }

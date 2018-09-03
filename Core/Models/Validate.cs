@@ -42,5 +42,22 @@ namespace Core.Models
             }
 
         }
+        
+        public static void ValidarFecha(int dia, int mes, int anio)
+        {
+            if (dia > 31 || dia < 0)
+            {
+                throw new ArgumentOutOfRangeException("dia no valido");
+            }
+            if (mes > 12 || mes < 0)
+            {
+                throw new ArgumentOutOfRangeException("mes no valido");
+            }
+            if (anio > 2100 || anio < 1900)
+            {
+                throw new ArgumentOutOfRangeException("anio no valido");
+            }
+
+        }
     }
 }
