@@ -18,6 +18,15 @@ namespace Core.Models
         /// <inheritdoc cref="BaseEntity.Validate"/>
         public override void Validate()
         {
+            if (Persona == null)
+            {
+                throw new ModelException("La persona no puede ser nula.");
+            }
+
+            if (Password == null || Persona.Equals(""))
+            {
+                throw new ModelException("El usuario debe tener contraseña");
+            }
         }
     }
 }
