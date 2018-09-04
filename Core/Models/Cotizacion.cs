@@ -74,5 +74,12 @@ namespace Core.Models
                 throw new ArgumentOutOfRangeException("Indice del servicio fuera de rango.");
             Servicios.RemoveAt(index);
         }
+
+        
+        public override bool Equals(object obj)
+        {
+            Cotizacion other = (Cotizacion) obj ?? throw new ArgumentException("");
+            return other.Codigo.Equals(this.Codigo);
+        }
     }
 }

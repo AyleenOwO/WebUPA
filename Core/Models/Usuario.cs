@@ -1,3 +1,5 @@
+using System;
+
 namespace Core.Models
 {
     /// <summary>
@@ -27,6 +29,12 @@ namespace Core.Models
             {
                 throw new ModelException("El usuario debe tener contraseña");
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            Usuario other = (Usuario) obj ?? throw new ArgumentException();
+            return other.Persona.Equals(this.Persona);
         }
     }
 }

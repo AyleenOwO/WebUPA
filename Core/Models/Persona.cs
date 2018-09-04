@@ -58,5 +58,12 @@ namespace Core.Models
                 throw new ModelException("Email no puede ser null o vacio.");
             }
         }
+        
+
+        public override bool Equals(object obj)
+        {
+            Persona persona = (Persona) obj ?? throw new ArgumentException("Se debe comparar solo con 'Persona'.");
+            return base.Equals(obj);
+        }
     }
 }
