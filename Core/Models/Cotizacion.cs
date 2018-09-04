@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Core.Models
 {
-    enum EstadoC { BORRADOR, ENVIADO, ACEPTADO, RECHAZADO, CANCELADO, COBRADO};
     
     public class Cotizacion : BaseEntity
     {
+        public EstadoCotizacion estado;
         /// <summary>
         /// Identificador unico.
         /// </summary>
@@ -47,6 +48,31 @@ namespace Core.Models
             /// 
             throw new System.NotImplementedException();
             
+        }
+
+        /// <summary>
+        /// Agrega un servicio a la cotizacion.
+        /// </summary>
+        /// <param name="servicio"></param>
+        /// <exception cref="ModelException">Servicio que se agregara.</exception>
+        public void Add(Servicio servicio)
+        {
+            if (servicio == null)
+                throw new ModelException("El servicio no puede ser null");
+            Servicios.Add(servicio);
+        }
+
+        
+        /// <summary>
+        /// Elimina un servicio de la cotizacion.
+        /// </summary>
+        /// <param name="index">Indice del servicio.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void RemoveServicio(int index)
+        {
+            if(index < 0 || index >= Servicios.Count)
+                throw new ArgumentOutOfRangeException("Indice del servicio fuera de rango.");
+            Servicios.RemoveAt(index);
         }
     }
 }

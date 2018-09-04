@@ -2,11 +2,9 @@
 
 namespace Core.Models
 {
-    
-    enum EstadoS { PREPRODUCCION, GRABADO, MONTAJE, POSTPRODUCCION};
-    
     public class Servicio : BaseEntity
     {
+        public EstadoServicio Estado { get; set; }
         /// <summary>
         /// Nombre del servicio
         /// </summary>
