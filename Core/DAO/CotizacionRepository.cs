@@ -8,7 +8,7 @@ namespace Core.DAO
 {
     public class CotizacionRepository: ModelRepository<Cotizacion>, ICotizacionRepository
     {
-        CotizacionRepository(DbContext dbContext): base(dbContext)
+        public CotizacionRepository(DbContext dbContext): base(dbContext)
         {
             
         }

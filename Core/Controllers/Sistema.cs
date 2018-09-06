@@ -14,19 +14,21 @@ namespace Core.Controllers
         // Patron Repositorio, generalizado via Generics
         // https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/
         private readonly IPersonaRepository _repositoryPersona;
-
+        private readonly ICotizacionRepository _repositoryCotizacion;
         private readonly IRepository<Usuario> _repositoryUsuario;
 
         /// <summary>
         /// Inicializa los repositorios internos de la clase.
         /// </summary>
-        public Sistema(IPersonaRepository repositoryPersona, IRepository<Usuario> repositoryUsuario)
+        public Sistema(IPersonaRepository repositoryPersona, IRepository<Usuario> repositoryUsuario, ICotizacionRepository repositoryCotizacion)
         {
             // Setter!
             _repositoryPersona = repositoryPersona ??
                                  throw new ArgumentNullException("Se requiere el repositorio de personas");
             _repositoryUsuario = repositoryUsuario ??
                                  throw new ArgumentNullException("Se requiere repositorio de usuarios");
+            _repositoryCotizacion = repositoryCotizacion ??
+                                    throw new ArgumentNullException("Se requiere repositorio de cotizaciones");
 
             // Inicializacion del repositorio.
             _repositoryPersona.Initialize();
