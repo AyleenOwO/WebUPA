@@ -27,7 +27,6 @@ namespace Core.Models
                 throw new ModelException("Precio no puede ser null");
             }
             
-            throw new System.NotImplementedException();
         }
     }
 }

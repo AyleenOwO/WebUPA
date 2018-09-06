@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Core.Exceptions;
 using Core.Models;
@@ -13,11 +14,14 @@ namespace Core.DAO
             
         }
 
-        public Cotizacion GetByCodigo(String codigo)
+        /// <inheritdoc />
+        public List<Cotizacion> GetByRut(String rut)
         {
-            Cotizacion cotizacion = _dbContext.Set<Cotizacion>().FirstOrDefault(t => t.Codigo.Equals(codigo))
-                ?? throw new DatoNoEncontradoException("Cotizacion no encontrada");
-            return cotizacion;
+            Validate.ValidarRut(rut);
+            List<Cotizacion> cotizaciones = _dbContext.Set<Cotizacion>().Where(t => t.rutEquals(rut)).ToList();
+            if(cotizaciones.Count == 0)
+                throw new DatoNoEncontradoException("Cotizacion no encontrada");
+            return cotizaciones;
         }
     }
 }

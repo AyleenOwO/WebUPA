@@ -36,6 +36,7 @@ namespace Core.Controllers
             _repositoryUsuario.Initialize();
         }
 
+        /// <inheritdoc />
         public void Save(Cotizacion cotizacion)
         {
             if(cotizacion == null)

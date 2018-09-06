@@ -8,11 +8,12 @@ namespace Core.Models
     public class Cotizacion : BaseEntity
     {
         public EstadoCotizacion estado;
+        
         /// <summary>
-        /// Identificador unico.
+        /// Persona asociada a la cotizacion.
         /// </summary>
-        public string Codigo { get; set; }
-
+        public Persona Persona { get; set; }
+        
         /// <summary>
         /// fecha en la que se realizo la cotizacion.
         /// </summary>
@@ -21,7 +22,17 @@ namespace Core.Models
         /// <summary>
         /// Precio total de la cotizacion.
         /// </summary>
-        public int Precio { get; set; }
+        public int Precio {
+            get
+            {
+                int total = 0;
+                foreach (var servicio in Servicios)
+                {
+                    total += servicio.Precio;
+                }
+
+                return total;
+            }}
 
         /// <summary>
         /// Servicios que contiene la cotizacoon
@@ -32,21 +43,23 @@ namespace Core.Models
         /// <inheritdoc cref="BaseEntity.Validate"/> 
         public override void Validate()
         {
-            if (String.IsNullOrEmpty(Codigo))
+            if (Persona == null)
             {
-                throw new ModelException("Codigo no puede ser null");
+                throw new ModelException("Persona no puede ser null");
             }
-            
-            Models.Validate.ValidarFecha(Fecha.Day, Fecha.Month, Fecha.Year);
+            Persona.Validate();
             
             if (Precio == null)
             {
                 throw new ModelException("Precio no puede ser null");
             }
             
-            ///Validar servicios??
-            /// 
-            throw new System.NotImplementedException();
+            if(Servicios == null)
+                throw new ModelException("La persona no puede ser null.");
+            foreach (var servicio in Servicios)
+            {
+                servicio.Validate();
+            }
             
         }
 
@@ -75,11 +88,14 @@ namespace Core.Models
             Servicios.RemoveAt(index);
         }
 
-        
-        public override bool Equals(object obj)
+        /// <summary>
+        /// Verifica igualdad de rut.
+        /// </summary>
+        /// <param name="rut"></param>
+        /// <returns></returns>
+        public bool rutEquals(string rut)
         {
-            Cotizacion other = (Cotizacion) obj ?? throw new ArgumentException("");
-            return other.Codigo.Equals(this.Codigo);
+            return Persona.Rut.Equals(rut);
         }
     }
 }
