@@ -15,13 +15,9 @@ namespace Core.DAO
         }
 
         /// <inheritdoc />
-        public List<Cotizacion> GetByRut(String rut)
+        public List<Cotizacion> GetByRut(string rut)
         {
-            Validate.ValidarRut(rut);
-            List<Cotizacion> cotizaciones = _dbContext.Set<Cotizacion>().Where(t => t.rutEquals(rut)).ToList();
-            if(cotizaciones.Count == 0)
-                throw new DatoNoEncontradoException("Cotizacion no encontrada");
-            return cotizaciones;
+            return _dbContext.Set<Cotizacion>().Where(t => t.rutEquals(rut)).ToList();
         }
     }
 }
