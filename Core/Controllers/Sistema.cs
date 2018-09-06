@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.DAO;
 using Core.Models;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Core.Controllers
 {
@@ -33,6 +34,28 @@ namespace Core.Controllers
             // Inicializacion del repositorio.
             _repositoryPersona.Initialize();
             _repositoryUsuario.Initialize();
+        }
+
+        public void Save(Cotizacion cotizacion)
+        {
+            if(cotizacion == null)
+                throw new ModelException("Cotizacion no puede ser null.");
+            _repositoryCotizacion.Add(cotizacion);
+        }
+
+        public void Update(Cotizacion cotizacion)
+        {
+            
+        }
+
+        public void Eliminar(Cotizacion cotizacion)
+        {
+            
+        }
+
+        public List<Cotizacion> FindCotizaciones(string rutEmailCodigo)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />

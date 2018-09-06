@@ -27,6 +27,24 @@ namespace Core.Controllers
         /// <param name="password"></param>
         void Save(Persona persona, string password);
 
+        void Save(Cotizacion cotizacion);
+
+        void Eliminar(Cotizacion cotizacion);
+
+        /// <summary>
+        /// Entrega las cotizaciones
+        /// </summary>
+        /// <param name="rutMailCodigo"></param>
+        /// <returns></returns>
+        List<Cotizacion> FindCotizaciones(string rutMailCodigo);
+
+        
+        /// <summary>
+        /// Actualiza (reemplaza) la cotizacion.
+        /// </summary>
+        /// <param name="cotizacion"></param>
+        void Update(Cotizacion cotizacion);
+
         /// <summary>
         /// Obtiene el usuario desde la base de datos, verificando su login y password.
         /// </summary>
