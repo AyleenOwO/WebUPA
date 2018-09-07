@@ -104,7 +104,7 @@ namespace Core.Models
             if(other == null)
                 throw new ArgumentException("La cotizacion de origen de los datos es nula.");
             Servicios.Clear();
-            Servicios.AddRange(other.Servicios);+
+            Servicios.AddRange(other.Servicios);
         }
     }
 }

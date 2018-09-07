@@ -59,6 +59,8 @@ namespace Core.Controllers
         {
             if (cotizacion == null)
                 throw new ArgumentException("La cotizacion a eliminar es null");
+            
+            _repositoryCotizacion.Remove(cotizacion);
         }
 
         public List<Cotizacion> FindCotizaciones(string rutEmail)
