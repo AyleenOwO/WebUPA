@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Core.DAO;
 using Core.Models;
@@ -40,23 +41,37 @@ namespace Core.Controllers
         public void Save(Cotizacion cotizacion)
         {
             if(cotizacion == null)
-                throw new ModelException("Cotizacion no puede ser null.");
+                throw new ModelException("La cotizacion a guarar no puede ser null.");
             _repositoryCotizacion.Add(cotizacion);
         }
 
         public void Update(Cotizacion cotizacion)
         {
-            
+            if(cotizacion == null)
+                throw new ArgumentException("La cotizacion es null.");
+            Cotizacion oldCotizacion = _repositoryCotizacion.GetById(cotizacion.Id);
+            if(oldCotizacion == null)
+                throw new DataException("La cotizacion no existe en la base de datos.");
+            oldCotizacion.Update(cotizacion);
         }
 
         public void Eliminar(Cotizacion cotizacion)
         {
-            
+            if (cotizacion == null)
+                throw new ArgumentException("La cotizacion a eliminar es null");
         }
 
-        public List<Cotizacion> FindCotizaciones(string rutEmailCodigo)
+        public List<Cotizacion> FindCotizaciones(string rutEmail)
         {
-            throw new NotImplementedException();
+            Persona persona = Find(rutEmail);
+            if(persona == null)
+                throw new DataException("No existe persona asociada al rut/mail.");
+
+            List<Cotizacion> cotizaciones = _repositoryCotizacion.GetByRut(persona.Rut);
+            if(cotizaciones.Count == 0)
+                throw new DataException("No hay cotizaciones asociadas a la persona.");
+
+            return cotizaciones;
         }
 
         /// <inheritdoc />

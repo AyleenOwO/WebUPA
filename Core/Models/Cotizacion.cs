@@ -32,12 +32,13 @@ namespace Core.Models
                 }
 
                 return total;
-            }}
+            }
+        }
 
         /// <summary>
-        /// Servicios que contiene la cotizacoon
+        /// Servicios que contiene la cotizacoon.
         /// </summary>
-        public List<Servicio> Servicios = new List<Servicio>();
+        public readonly List<Servicio> Servicios = new List<Servicio>();
 
 
         /// <inheritdoc cref="BaseEntity.Validate"/> 
@@ -74,7 +75,7 @@ namespace Core.Models
                 throw new ModelException("El servicio no puede ser null");
             Servicios.Add(servicio);
         }
-
+        
         
         /// <summary>
         /// Elimina un servicio de la cotizacion.
@@ -96,6 +97,14 @@ namespace Core.Models
         public bool rutEquals(string rut)
         {
             return Persona.Rut.Equals(rut);
+        }
+
+        public void Update(Cotizacion other)
+        {
+            if(other == null)
+                throw new ArgumentException("La cotizacion de origen de los datos es nula.");
+            Servicios.Clear();
+            Servicios.AddRange(other.Servicios);+
         }
     }
 }

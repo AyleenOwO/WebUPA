@@ -22,9 +22,9 @@ namespace Core.Models
                 throw new ModelException("Nombre no puede ser null");
             }
             
-            if (Precio == null)
+            if (Precio < 0)
             {
-                throw new ModelException("Precio no puede ser null");
+                throw new ModelException("Precio no puede ser negativo");
             }
             
         }

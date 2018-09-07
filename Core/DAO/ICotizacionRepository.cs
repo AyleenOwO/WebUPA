@@ -12,5 +12,13 @@ namespace Core.DAO
         /// <param name="rut">rut de la persona a la se asocian las cotizaciones</param>
         /// <returns></returns>
         List<Cotizacion> GetByRut(String rut);
+
+        /// <summary>
+        /// Elimina la cotizacion de la base de datos.
+        /// </summary>
+        /// <param name="cotizacion"></param>
+        void Remove(Cotizacion cotizacion);
+
+        Cotizacion GetById(int id);
     }
 }

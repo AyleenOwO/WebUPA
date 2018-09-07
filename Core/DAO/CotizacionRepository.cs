@@ -19,5 +19,15 @@ namespace Core.DAO
         {
             return _dbContext.Set<Cotizacion>().Where(t => t.rutEquals(rut)).ToList();
         }
+
+        public void Remove(Cotizacion cotizacion)
+        {
+            _dbContext.Remove(cotizacion);
+        }
+
+        public Cotizacion GetById(int id)
+        {
+            return _dbContext.Set<Cotizacion>().FirstOrDefault(t => t.Id == id);
+        }
     }
 }
