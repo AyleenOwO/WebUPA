@@ -17,7 +17,7 @@ namespace Core.DAO
         /// <inheritdoc />
         public List<Cotizacion> GetByRut(string rut)
         {
-            return _dbContext.Set<Cotizacion>().Where(t => t.rutEquals(rut)).ToList();
+            return base.GetAll(t => t.rutEquals(rut)).ToList();
         }
 
         public void Remove(Cotizacion cotizacion)

@@ -62,7 +62,7 @@ namespace Core.Models
         public override bool Equals(object obj)
         {
             Persona persona = (Persona) obj ?? throw new ArgumentException("Se debe comparar solo con 'Persona'.");
-            return base.Equals(obj);
+            return persona.Rut.Equals(Rut);
         }
     }
 }
