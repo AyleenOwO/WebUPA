@@ -25,7 +25,7 @@ namespace Core.Models
                 throw new ModelException("La persona no puede ser nula.");
             }
 
-            if (Password == null || Persona.Equals(""))
+            if (Password == null || Password.Equals("") || Password.Equals(" "))
             {
                 throw new ModelException("El usuario debe tener contraseña");
             }
