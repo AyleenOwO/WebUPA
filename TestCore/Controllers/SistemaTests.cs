@@ -138,11 +138,15 @@ namespace TestCore.Controllers
                     cotizacion.Add(servicio);
                     Assert.NotEmpty(cotizacion.Servicios);
                 }
-
+                //Agregar persona
+                {
+                    sistema.Save(persona);
+                }
                 //Agregar cotizacion
                 {
                     sistema.Save(cotizacion);
                 }
+
                 _output.WriteLine("Done");
                 _output.WriteLine(" busqueda null o vacio");
 
@@ -162,31 +166,29 @@ namespace TestCore.Controllers
                 }
                 //Busqueda por rut de cliente (no exitosa)
                 {
-                    List<Cotizacion> busqueda = sistema.FindCotizaciones("194441568");
-                    Assert.Empty(busqueda);
-                    Assert.Null(busqueda);
-                }
-                _output.WriteLine("Done");
-                _output.WriteLine("Probando busqueda por fecha...");
-                {
+                    Assert.Throws<System.Data.DataException>(() => sistema.FindCotizaciones("194441568"));
 
                 }
-                _output.WriteLine("Done");
+                _output.WriteLine("Done..");
                 _output.WriteLine("Probando busqueda por email...");
+                //Busqueda por email  de cliente (exitosa)
                 {
-                    
+                    List<Cotizacion> busqueda = sistema.FindCotizaciones("felipevarasjara@gmail.com");
+                    Assert.NotEmpty(busqueda);
+                    Assert.NotNull(busqueda);
                 }
+                //Busqueda por email de cliente (no exitosa)
+                {
+                    Assert.Throws<System.Data.DataException>(() => sistema.FindCotizaciones("felipe_varas@gmail.com"));
+                }
+
                 _output.WriteLine("Done");
-                _output.WriteLine("Probando busqueda por texto...");
-                {
-                    
-                }
             }
 
         }
         
         [Fact]
-        public void SaveTest()
+        public void AllSavesTest()
         {
             _output.WriteLine("Starting Sistema test ...");
             ISistema sistema = Startup.BuildSistema();
@@ -226,7 +228,7 @@ namespace TestCore.Controllers
                 Cotizacion cotizacionNull = new Cotizacion()
                 {
                     estado = EstadoCotizacion.RECHAZADO,
-                    Fecha = DateTime.Parse("0"),
+                    Fecha = DateTime.Now,
                     Persona = null,
                 };
 
@@ -239,31 +241,33 @@ namespace TestCore.Controllers
                 _output.WriteLine("Probando guardar persona");
                 //Guardar persona (exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Save(persona));
+                   sistema.Save(persona);
                 }
                 //Guardar persona (no exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Save(personaNull));
+                    Assert.Throws<Core.ModelException>(() => sistema.Save(personaNull));
                 }
                 _output.WriteLine("Done..");
                 _output.WriteLine("Probando guardar cotizacion");
                 //Guardar cotizacion (exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Save(cotizacion));
+                    sistema.Save(cotizacion);
                 }
                 //Guardar cotizacion (no exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Save(cotizacionNull));
+                    Assert.Throws<Core.ModelException>(() => sistema.Save(cotizacionNull));
                 }
                 _output.WriteLine("Done..");
                 _output.WriteLine("Probando guardar Usuario");
                 //Guardar Usuario (exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Save(persona,"felipev123"));
+                    sistema.Save(persona, "felipev123");
                 }
                 //Guardar Usuario (no exitosa)
                 {
-                    sistema.Save(persona, "felipev123");
+                    Assert.Throws<Core.ModelException>(() => sistema.Save(personaNull,null));
+                    Assert.Throws<ArgumentNullException>(() => sistema.Save(persona,null));
+                    Assert.Throws<Core.ModelException>(() => sistema.Save(personaNull,"felipev123"));
                 }
                 _output.WriteLine("Done..");
 
@@ -321,7 +325,7 @@ namespace TestCore.Controllers
                     _output.WriteLine("Testing Eliminar Cotizacion ..");
                     // Eliminar cotizacion (exitosa)
                     {
-                        Assert.Throws<ArgumentException>(() => sistema.Eliminar(cotizacionEliminada));
+                        sistema.Eliminar(cotizacionEliminada);
                     }
                     // Eliminar cotizacion (no exitosa)
                     {
@@ -379,7 +383,6 @@ namespace TestCore.Controllers
                     cotizacion.Add(servicio);
                     Assert.NotEmpty(cotizacion.Servicios);
                 }
-                _output.WriteLine("Done");
                 //Guardar persona 
                 {
                     sistema.Save(persona);
@@ -388,22 +391,22 @@ namespace TestCore.Controllers
                 {
                     sistema.Save(cotizacion);
                 }
-
+                _output.WriteLine("Done");
                 _output.WriteLine("Probando update cotizacion");
                 //Actualizar cotizacion (exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Update(cotizacionUpdate));
+                    sistema.Update(cotizacionUpdate);
                 }
                 //Actualizar cotizacion (no exitosa)
                 {
-                    Assert.Throws<ArgumentException>(() => sistema.Update(null));
+                    Assert.Throws<ArgumentNullException>(() => sistema.Update(null));
                 }
                 _output.WriteLine("Done..");
             }
         }
         
         [Fact]
-        public void FindPersonaTest()
+        public void FindPersonaCotizacionTest()
         {
             _output.WriteLine("Starting Sistema test ...");
             ISistema sistema = Startup.BuildSistema();
@@ -419,16 +422,27 @@ namespace TestCore.Controllers
                     Paterno = "jara",
                     Rut = "194517319"
                 };
-                //Agregar cotizacion
+                Cotizacion cotizacion = new Cotizacion()
+                {
+                    Id = 1,
+                    estado = EstadoCotizacion.ENVIADO,
+                    Fecha = DateTime.Now,
+                    Persona = persona,
+                };
+                //Agregar persona
                 {
                     sistema.Save(persona);
+                } 
+                //Agregar cotizacion
+                {
+                    sistema.Save(cotizacion);
                 }   
             }
             //Busqueda en blanco o null
             {
-                Assert.Throws<ArgumentException>(() => sistema.Find(null));
-                Assert.Throws<ArgumentException>(() => sistema.Find(""));
-                Assert.Throws<ArgumentException>(() => sistema.Find(" "));
+                Assert.Throws<System.Data.DataException>(() => sistema.Find(null));
+                Assert.Throws<System.Data.DataException>(() => sistema.Find(""));
+                Assert.Throws<System.Data.DataException>(() => sistema.Find(" "));
             }
             
             _output.WriteLine("Done..");
@@ -440,8 +454,7 @@ namespace TestCore.Controllers
             }
             //Busqueda por rut de cliente (no exitosa)
             {
-                Persona busqueda = sistema.Find("194441568");
-                Assert.Null(busqueda);   
+                Assert.Throws<System.Data.DataException>(() => sistema.Find("194441568"));
             }
             
             _output.WriteLine("Done");
@@ -453,10 +466,21 @@ namespace TestCore.Controllers
             }
             //Busqueda por rut de cliente (no exitosa)
             {
-                Persona busqueda = sistema.Find("felipe_varas@gmail.com");
-                Assert.Null(busqueda);   
+                Assert.Throws<System.Data.DataException>(() => sistema.Find("felipe_varas@gmail.com"));  
             }
             _output.WriteLine("Done..");
+            _output.WriteLine("Probando busqueda por id...");
+            //Busqueda por id de cotizacion (exitosa)
+            {
+                Cotizacion busqueda = sistema.Find(1);
+                Assert.NotNull(busqueda);
+            }
+            //Busqueda por id de cotizacion (no exitosa)
+            {
+                Assert.Throws<System.Data.DataException>(() => sistema.Find(-1));  
+            }
+            _output.WriteLine("Done..");
+            
             
         }
     }
