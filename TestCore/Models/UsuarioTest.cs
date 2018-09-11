@@ -25,6 +25,14 @@ namespace TestCore.Models
                 Password = "123"
             };
             
+            //Insercion persona
+            {
+                usuario.Persona = persona;
+                Assert.NotNull(usuario.Persona);
+                
+                usuario.Validate();
+            }
+
             
         }
     }

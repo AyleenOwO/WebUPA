@@ -24,8 +24,6 @@ namespace TestCore.Models
                 Rut = "194517319"
             };
             
-            
-            
             Servicio servicio = new Servicio()
             {
                 Estado = EstadoServicio.PREPRODUCCION,
