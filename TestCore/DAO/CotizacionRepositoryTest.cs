@@ -84,6 +84,15 @@ namespace TestCore.DAO
                 Assert.Empty(busqueda);
             }
             
+            //Eliminar cotizacion  (exitosa)
+            {
+                repository.Remove(cotizacion);
+            }
+            
+            //Eliminar cotizacion (no exitosa)
+            {Assert.Throws<ArgumentNullException>(() => repository.Remove(null));
+            }
+            
         }
         
         
