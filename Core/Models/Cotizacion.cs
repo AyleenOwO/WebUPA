@@ -12,7 +12,7 @@ namespace Core.Models
         /// <summary>
         /// id asociada a la cotizacion asignada por la base de datos.
         /// </summary>
-        public String Id { get; set; }
+        public int Id { get; set; }
         
         /// <summary>
         /// Persona asociada a la cotizacion.
