@@ -70,8 +70,8 @@ namespace TestCore.Controllers
             // Busqueda de usuario
             {
                 Exception usuarioNoExiste =
-                    Assert.Throws<ModelException>(() => sistema.Login("notfound@ucn.cl", "durrutia123"));
-                Assert.Equal("Usuario no encontrado", usuarioNoExiste.Message);
+                    Assert.Throws<System.Data.DataException>(() => sistema.Login("notfound@ucn.cl", "durrutia123"));
+                Assert.Equal("La persona no existe en la base de datos.", usuarioNoExiste.Message);
 
                 Exception usuarioNoExistePersonaSi =
                     Assert.Throws<ModelException>(() => sistema.Login("durrutia@ucn.cl", "durrutia123"));
