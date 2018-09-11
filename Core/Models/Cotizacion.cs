@@ -11,6 +11,11 @@ namespace Core.Models
         public EstadoCotizacion estado { get; set; }
         
         /// <summary>
+        /// id asociada a la cotizacion asignada por la base de datos.
+        /// </summary>
+        public int Id { get; set; }
+        
+        /// <summary>
         /// Persona asociada a la cotizacion.
         /// </summary>
         public Persona Persona { get; set; }
