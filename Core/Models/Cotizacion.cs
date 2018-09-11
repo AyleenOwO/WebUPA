@@ -104,21 +104,5 @@ namespace Core.Models
         {
             return Persona.Rut.Equals(rut);
         }
-
-        /// <summary>
-        /// Actualiza la cotizacion.
-        /// </summary>
-        /// <param name="other">Cotizacion que contiene los nuevos datos</param>
-        /// <exception cref="ArgumentException"></exception>
-        public void Update(Cotizacion other)
-        {
-            if(other == null)
-                throw new ArgumentException("La cotizacion de origen de los datos es nula.");
-            Servicios.Clear();
-            Servicios.AddRange(other.Servicios);
-
-            estado = other.estado;
-            
-        }
     }
 }
