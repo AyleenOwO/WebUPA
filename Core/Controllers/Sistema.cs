@@ -48,10 +48,8 @@ namespace Core.Controllers
         public void Update(Cotizacion cotizacion)
         {
             this.Save(cotizacion);
-            
-            Cotizacion oldCotizacion = _repositoryCotizacion.GetById(cotizacion.Id);
-            if(oldCotizacion == null)
-                throw new DataException("La cotizacion no existe en la base de datos.");
+
+            Cotizacion oldCotizacion = Find(cotizacion.Id);
             oldCotizacion.Update(cotizacion);
             
         }
