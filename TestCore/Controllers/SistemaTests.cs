@@ -108,6 +108,7 @@ namespace TestCore.Controllers
             _output.WriteLine("Starting Sistema test ...");
             ISistema sistema = Startup.BuildSistema();
 
+
             //Insert Cotizacion
             {
                 _output.WriteLine("Testing insert ..");
@@ -143,48 +144,48 @@ namespace TestCore.Controllers
                     sistema.Save(cotizacion);
                 }
                 _output.WriteLine("Done");
- 
+                _output.WriteLine(" busqueda null o vacio");
+
+                //Busqueda en blanco o null
+                {
+                    Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(null));
+                    Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(""));
+                    Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(" "));
+                }
+                _output.WriteLine("Done..");
+                _output.WriteLine("Probando busqueda por rut...");
+                //Busqueda por rut  de cliente (exitosa)
+                {
+                    List<Cotizacion> busqueda = sistema.FindCotizaciones("194517319");
+                    Assert.NotEmpty(busqueda);
+                    Assert.NotNull(busqueda);
+                }
+                //Busqueda por rut de cliente (no exitosa)
+                {
+                    List<Cotizacion> busqueda = sistema.FindCotizaciones("194441568");
+                    Assert.Empty(busqueda);
+                    Assert.Null(busqueda);
+                }
+                _output.WriteLine("Done");
+                _output.WriteLine("Probando busqueda por fecha...");
+                {
+
+                }
+                _output.WriteLine("Done");
+                _output.WriteLine("Probando busqueda por email...");
+                {
+                    
+                }
+                _output.WriteLine("Done");
+                _output.WriteLine("Probando busqueda por texto...");
+                {
+                    
+                }
             }
-            _output.WriteLine(" busqueda null o vacio");
-            //Busqueda en blanco o null
-             {
-                Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(null));
-                Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(""));
-                Assert.Throws<ArgumentException>(() => sistema.FindCotizaciones(" "));
-             }
-             _output.WriteLine("Done..");
-             _output.WriteLine("Probando busqueda por rut...");
-             //Busqueda por rut  de cliente (exitosa)
-             {
-                 List<Cotizacion> busqueda = sistema.FindCotizaciones("194517319");
-                 Assert.NotEmpty(busqueda);
-                 Assert.NotNull(busqueda);
-              }
-             //Busqueda por rut de cliente (no exitosa)
-              {
-                  List<Cotizacion> busqueda = sistema.FindCotizaciones("194441568");
-                  Assert.Empty(busqueda);
-                  Assert.Null(busqueda);
-              }
-              _output.WriteLine("Done");
-              _output.WriteLine("Probando busqueda por fecha...");
-              {
 
-              }
-              _output.WriteLine("Done");
-              _output.WriteLine("Probando busqueda por email...");
-              {
-
-              }
-              _output.WriteLine("Done");
-              _output.WriteLine("Probando busqueda por texto...");
-              {
-
-              }
-            
         }
-
-
+        
+        [Fact]
         public void SaveTest()
         {
             _output.WriteLine("Starting Sistema test ...");
