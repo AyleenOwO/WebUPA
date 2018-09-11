@@ -20,7 +20,7 @@ namespace TestCore.Models
             //Validacion exitosa
             servicio.Validate();
             
-            //precio negativo
+            //precio negativo 
             {
                 servicio.Precio = -23;
                 Assert.Throws<ModelException>(() => servicio.Validate());
