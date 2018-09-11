@@ -2,7 +2,7 @@
 using Core.Models;
 using Xunit;
 
-namespace TestCore.DAO
+namespace TestCore.Models
 {
     public class CotizacionTest
     {
@@ -23,6 +23,8 @@ namespace TestCore.DAO
                 Paterno = "varas",
                 Rut = "194517319"
             };
+            
+            
             
             Servicio servicio = new Servicio()
             {

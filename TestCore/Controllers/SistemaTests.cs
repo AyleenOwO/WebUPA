@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Core;
 using Core.Controllers;
 using Core.DAO;
@@ -101,8 +102,7 @@ namespace TestCore.Controllers
             }
 
         }
-
-        [Theory]
+        [Fact]
         public void FindCotizacionesTest()
         {
             _output.WriteLine("Starting Sistema test ...");
@@ -120,6 +120,8 @@ namespace TestCore.Controllers
                     Paterno = "jara",
                     Rut = "194517319"
                 };
+                sistema.Save(persona);
+                Assert.NotNull(sistema.Find(persona.Rut));
                 Servicio servicio = new Servicio()
                 {
                     Estado = EstadoServicio.PREPRODUCCION,
@@ -162,9 +164,7 @@ namespace TestCore.Controllers
                 }
                 //Busqueda por rut de cliente (no exitosa)
                 {
-                    List<Cotizacion> busqueda = sistema.FindCotizaciones("194441568");
-                    Assert.Empty(busqueda);
-                    Assert.Null(busqueda);
+                    Assert.Throws<DataException>(() => sistema.FindCotizaciones("194441568"));
                 }
                 _output.WriteLine("Done");
                 _output.WriteLine("Probando busqueda por fecha...");

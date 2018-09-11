@@ -35,6 +35,7 @@ namespace Core.Controllers
             // Inicializacion del repositorio.
             _repositoryPersona.Initialize();
             _repositoryUsuario.Initialize();
+            _repositoryCotizacion.Initialize();
         }
 
         /// <inheritdoc />
@@ -65,6 +66,10 @@ namespace Core.Controllers
 
         public List<Cotizacion> FindCotizaciones(string rutEmail)
         {
+            if ( rutEmail == null || String.IsNullOrEmpty(rutEmail.Replace(" ", "")))
+            {
+                throw new ArgumentException("rutEmail no puede ser null ni vacio.");
+            }
             Persona persona = Find(rutEmail);
             if(persona == null)
                 throw new DataException("No existe persona asociada al rut/mail.");
