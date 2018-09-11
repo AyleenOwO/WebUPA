@@ -45,16 +45,8 @@ namespace Core.Controllers
                 throw new ModelException("La cotizacion a guardar no puede ser null.");
             _repositoryCotizacion.Add(cotizacion);
         }
-
-        public void Update(Cotizacion cotizacion)
-        {
-            this.Save(cotizacion);
-
-            Cotizacion oldCotizacion = Find(cotizacion.Id);
-            oldCotizacion.Update(cotizacion);
-            
-        }
-
+        
+        /// <inheritdoc />
         public void Eliminar(Cotizacion cotizacion)
         {
             if (cotizacion == null)
@@ -62,7 +54,8 @@ namespace Core.Controllers
             
             _repositoryCotizacion.Remove(cotizacion);
         }
-
+       
+        /// <inheritdoc />
         public List<Cotizacion> FindCotizaciones(string rutEmail)
         {
             if ( rutEmail == null || String.IsNullOrEmpty(rutEmail.Replace(" ", "")))
@@ -129,11 +122,7 @@ namespace Core.Controllers
         /// <inheritdoc />
         public Usuario Login(string rutEmail, string password)
         {
-            Persona persona = _repositoryPersona.GetByRutOrEmail(rutEmail);
-            if (persona == null)
-            {
-                throw new ModelException("Usuario no encontrado");
-            }
+            Persona persona = this.Find(rutEmail);
             
             IList<Usuario> usuarios = _repositoryUsuario.GetAll(u => u.Persona.Equals(persona));
             if (usuarios.Count == 0)
@@ -159,9 +148,14 @@ namespace Core.Controllers
         /// <inheritdoc />
         public Persona Find(string rutEmail)
         {
-            return _repositoryPersona.GetByRutOrEmail(rutEmail);
+            Persona persona = _repositoryPersona.GetByRutOrEmail(rutEmail);
+            if (persona == null)
+                throw new DataException("La persona no existe en la base de datos.");
+            return persona;
+            
         }
 
+        /// <inheritdoc />
         public Cotizacion Find(int id)
         {
             Cotizacion Cotizacion = _repositoryCotizacion.GetById(id);

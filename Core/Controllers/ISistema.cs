@@ -27,8 +27,16 @@ namespace Core.Controllers
         /// <param name="password"></param>
         void Save(Persona persona, string password);
 
+        /// <summary>
+        /// Guarda a una cotizacion en el sistema
+        /// </summary>
+        /// <param name="cotizacion"></param>
         void Save(Cotizacion cotizacion);
 
+        /// <summary>
+        /// Elimina a una cotizacion del sistema
+        /// </summary>
+        /// <param name="cotizacion"></param>
         void Eliminar(Cotizacion cotizacion);
 
         /// <summary>
@@ -37,13 +45,6 @@ namespace Core.Controllers
         /// <param name="rutMailCodigo"></param>
         /// <returns></returns>
         List<Cotizacion> FindCotizaciones(string rutMailCodigo);
-
-        
-        /// <summary>
-        /// Actualiza (reemplaza) la cotizacion.
-        /// </summary>
-        /// <param name="cotizacion"></param>
-        void Update(Cotizacion cotizacion);
 
         /// <summary>
         /// Obtiene el usuario desde la base de datos, verificando su login y password.
@@ -60,6 +61,11 @@ namespace Core.Controllers
         /// <returns>La persona si existe</returns>
         Persona Find(string rutEmail);
 
+        /// <summary>
+        /// Busqueda de una cotizacion por id.
+        /// </summary>
+        /// <param name="id">id de cotizacion</param>
+        /// <returns>La persona si existe</returns>
         Cotizacion Find(int id);
     }
 }
