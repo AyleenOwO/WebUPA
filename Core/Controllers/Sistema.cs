@@ -41,18 +41,19 @@ namespace Core.Controllers
         public void Save(Cotizacion cotizacion)
         {
             if(cotizacion == null)
-                throw new ModelException("La cotizacion a guarar no puede ser null.");
+                throw new ModelException("La cotizacion a guardar no puede ser null.");
             _repositoryCotizacion.Add(cotizacion);
         }
 
         public void Update(Cotizacion cotizacion)
         {
-            if(cotizacion == null)
-                throw new ArgumentException("La cotizacion es null.");
+            this.Save(cotizacion);
+            
             Cotizacion oldCotizacion = _repositoryCotizacion.GetById(cotizacion.Id);
             if(oldCotizacion == null)
                 throw new DataException("La cotizacion no existe en la base de datos.");
             oldCotizacion.Update(cotizacion);
+            
         }
 
         public void Eliminar(Cotizacion cotizacion)
@@ -100,7 +101,7 @@ namespace Core.Controllers
         public void Save(Persona persona, string password)
         {
             // Guardo o actualizo en el backend.
-            _repositoryPersona.Add(persona);
+            this.Save(persona);
 
             // Busco si el usuario ya existe
             Usuario usuario = _repositoryUsuario.GetAll(u => u.Persona.Equals(persona)).FirstOrDefault();
@@ -156,6 +157,14 @@ namespace Core.Controllers
         public Persona Find(string rutEmail)
         {
             return _repositoryPersona.GetByRutOrEmail(rutEmail);
+        }
+
+        public Cotizacion Find(int id)
+        {
+            Cotizacion Cotizacion = _repositoryCotizacion.GetById(id);
+            if (Cotizacion == null)
+                throw new DataException("La cotizacion no existe en la base de datos.");
+            return Cotizacion;
         }
     }
 }
