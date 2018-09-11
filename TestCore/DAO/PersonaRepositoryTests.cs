@@ -107,12 +107,15 @@ namespace TestCore.DAO
                 Persona persona = repo.GetById(1);
                 Assert.NotNull(persona);
                 
-                repo.Remove(persona);                
+                repo.Remove(persona);  
+                
+                //Eliminacion no exitosa
+                Assert.Throws<ArgumentNullException>(() => repo.Remove(null));
             }
             
             // Busqueda no exitosa
             {
-                Persona persona = repo.GetById(1);
+                Persona persona = repo.GetById(-1);
                 Assert.Null(persona);
             }
             
