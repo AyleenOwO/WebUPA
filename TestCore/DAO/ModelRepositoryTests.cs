@@ -100,6 +100,19 @@ namespace TestCore.DAO
                 Assert.Equal(1, entidades.Count);
             }
             
+            //Eliminar entidad  (exitosa)
+            {
+                Entidad entidad = repo.GetById(1);
+                Assert.NotNull(entidad);
+                
+                repo.Remove(entidad); 
+            }
+            
+            //Eliminar entidad (no exitosa)
+            {
+                Assert.Throws<ArgumentNullException>(() => repo.Remove(null));
+            }
+            
             _output.WriteLine("Test ended!");
             
         }
